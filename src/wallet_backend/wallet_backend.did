@@ -1,3 +1,18 @@
+type Metadata = record {
+  fee : opt nat64;
+  decimals : nat8;
+  name : text;
+  symbol : text;
+};
+type Result = variant { Ok; Err : TransferError };
+type TransferError = variant {
+  InvalidRecipient;
+  Other : text;
+  InsufficientFunds;
+};
 service : {
-    "greet": (text) -> (text) query;
+  icrc2_balance_of : (principal) -> (nat64) query;
+  icrc2_metadata : () -> (Metadata) query;
+  icrc2_total_supply : () -> (nat64) query;
+  icrc2_transfer : (principal, nat64) -> (Result);
 }
